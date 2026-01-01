@@ -1,40 +1,57 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { User, Lock, Bell, CreditCard, Globe, Shield, Camera, Check, AlertCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  User,
+  Lock,
+  Bell,
+  CreditCard,
+  Globe,
+  Shield,
+  Camera,
+  Check,
+  AlertCircle,
+} from "lucide-react";
 export function AccountSettingsPage() {
-  const [activeSection, setActiveSection] = useState('profile');
+  const [activeSection, setActiveSection] = useState("profile");
   const [profileData, setProfileData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
-    bio: 'Travel enthusiast and architecture lover.',
-    dateOfBirth: '1990-05-15',
-    address: '123 Main St, San Francisco, CA'
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@example.com",
+    phone: "+1 (555) 123-4567",
+    bio: "Travel enthusiast and architecture lover.",
+    dateOfBirth: "1990-05-15",
+    address: "123 Main St, San Francisco, CA",
   });
   const profileCompletion = 75;
-  const sections = [{
-    id: 'profile',
-    label: 'Profile',
-    icon: User
-  }, {
-    id: 'security',
-    label: 'Security',
-    icon: Lock
-  }, {
-    id: 'preferences',
-    label: 'Preferences',
-    icon: Globe
-  }, {
-    id: 'notifications',
-    label: 'Notifications',
-    icon: Bell
-  }, {
-    id: 'payments',
-    label: 'Payments',
-    icon: CreditCard
-  }];
-  return <div className="min-h-screen bg-sand pt-24 pb-12 px-6 md:px-12">
+  const sections = [
+    {
+      id: "profile",
+      label: "Profile",
+      icon: User,
+    },
+    {
+      id: "security",
+      label: "Security",
+      icon: Lock,
+    },
+    {
+      id: "preferences",
+      label: "Preferences",
+      icon: Globe,
+    },
+    {
+      id: "notifications",
+      label: "Notifications",
+      icon: Bell,
+    },
+    {
+      id: "payments",
+      label: "Payments",
+      icon: CreditCard,
+    },
+  ];
+  return (
+    <div className="min-h-screen bg-sand pt-24 pb-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
         <div className="mb-8">
@@ -47,13 +64,17 @@ export function AccountSettingsPage() {
         </div>
 
         {/* Profile Completion Progress */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} className="bg-gradient-to-br from-warm-green/10 to-terracotta/10 rounded-xl p-6 mb-8 border border-charcoal/10">
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          className="bg-gradient-to-br from-warm-green/10 to-terracotta/10 rounded-xl p-6 mb-8 border border-charcoal/10"
+        >
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="font-bold text-charcoal mb-1">
@@ -68,14 +89,19 @@ export function AccountSettingsPage() {
             </div>
           </div>
           <div className="w-full h-3 bg-white rounded-full overflow-hidden">
-            <motion.div initial={{
-            width: 0
-          }} animate={{
-            width: `${profileCompletion}%`
-          }} transition={{
-            duration: 1,
-            ease: 'easeOut'
-          }} className="h-full bg-gradient-to-r from-warm-green to-terracotta rounded-full" />
+            <motion.div
+              initial={{
+                width: 0,
+              }}
+              animate={{
+                width: `${profileCompletion}%`,
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeOut",
+              }}
+              className="h-full bg-gradient-to-r from-warm-green to-terracotta rounded-full"
+            />
           </div>
         </motion.div>
 
@@ -84,28 +110,45 @@ export function AccountSettingsPage() {
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-2 sticky top-24">
-              {sections.map(section => <button key={section.id} onClick={() => setActiveSection(section.id)} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${activeSection === section.id ? 'bg-warm-green text-white shadow-sm' : 'text-charcoal hover:bg-sand'}`}>
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => setActiveSection(section.id)}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
+                    activeSection === section.id
+                      ? "bg-warm-green text-white shadow-sm"
+                      : "text-charcoal hover:bg-sand"
+                  }`}
+                >
                   <section.icon className="w-5 h-5" />
                   <span className="font-medium">{section.label}</span>
-                </button>)}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Main Content Area */}
           <div className="lg:col-span-3 space-y-6">
             <AnimatePresence mode="wait">
-              {activeSection === 'profile' && <motion.div key="profile" initial={{
-              opacity: 0,
-              x: 20
-            }} animate={{
-              opacity: 1,
-              x: 0
-            }} exit={{
-              opacity: 0,
-              x: -20
-            }} transition={{
-              duration: 0.2
-            }}>
+              {activeSection === "profile" && (
+                <motion.div
+                  key="profile"
+                  initial={{
+                    opacity: 0,
+                    x: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: -20,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                >
                   {/* Profile Photo */}
                   <div className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6 mb-6">
                     <h3 className="font-bold text-charcoal mb-4 flex items-center">
@@ -142,66 +185,110 @@ export function AccountSettingsPage() {
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           First Name
                         </label>
-                        <input type="text" value={profileData.firstName} onChange={e => setProfileData({
-                      ...profileData,
-                      firstName: e.target.value
-                    })} className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="text"
+                          value={profileData.firstName}
+                          onChange={(e) =>
+                            setProfileData({
+                              ...profileData,
+                              firstName: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           Last Name
                         </label>
-                        <input type="text" value={profileData.lastName} onChange={e => setProfileData({
-                      ...profileData,
-                      lastName: e.target.value
-                    })} className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="text"
+                          value={profileData.lastName}
+                          onChange={(e) =>
+                            setProfileData({
+                              ...profileData,
+                              lastName: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           Email
                         </label>
-                        <input type="email" value={profileData.email} onChange={e => setProfileData({
-                      ...profileData,
-                      email: e.target.value
-                    })} className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="email"
+                          value={profileData.email}
+                          onChange={(e) =>
+                            setProfileData({
+                              ...profileData,
+                              email: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           Phone
                         </label>
-                        <input type="tel" value={profileData.phone} onChange={e => setProfileData({
-                      ...profileData,
-                      phone: e.target.value
-                    })} className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="tel"
+                          value={profileData.phone}
+                          onChange={(e) =>
+                            setProfileData({
+                              ...profileData,
+                              phone: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                       <div className="md:col-span-2">
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           Bio
                         </label>
-                        <textarea value={profileData.bio} onChange={e => setProfileData({
-                      ...profileData,
-                      bio: e.target.value
-                    })} rows={3} className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors resize-none" />
+                        <textarea
+                          value={profileData.bio}
+                          onChange={(e) =>
+                            setProfileData({
+                              ...profileData,
+                              bio: e.target.value,
+                            })
+                          }
+                          rows={3}
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors resize-none"
+                        />
                       </div>
                     </div>
                     <button className="mt-6 px-6 py-2 bg-warm-green text-white rounded-lg hover:bg-warm-green/90 transition-colors font-medium">
                       Save Changes
                     </button>
                   </div>
-                </motion.div>}
+                </motion.div>
+              )}
 
-              {activeSection === 'security' && <motion.div key="security" initial={{
-              opacity: 0,
-              x: 20
-            }} animate={{
-              opacity: 1,
-              x: 0
-            }} exit={{
-              opacity: 0,
-              x: -20
-            }} transition={{
-              duration: 0.2
-            }} className="space-y-6">
+              {activeSection === "security" && (
+                <motion.div
+                  key="security"
+                  initial={{
+                    opacity: 0,
+                    x: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: -20,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="space-y-6"
+                >
                   <div className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6">
                     <h3 className="font-bold text-charcoal mb-4 flex items-center">
                       <Lock className="w-5 h-5 mr-2 text-terracotta" />
@@ -212,19 +299,28 @@ export function AccountSettingsPage() {
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           Current Password
                         </label>
-                        <input type="password" className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="password"
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           New Password
                         </label>
-                        <input type="password" className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="password"
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-charcoal/80 mb-1">
                           Confirm New Password
                         </label>
-                        <input type="password" className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors" />
+                        <input
+                          type="password"
+                          className="w-full px-4 py-2 border border-charcoal/20 rounded-lg outline-none focus:border-warm-green transition-colors"
+                        />
                       </div>
                     </div>
                     <button className="mt-6 px-6 py-2 bg-warm-green text-white rounded-lg hover:bg-warm-green/90 transition-colors font-medium">
@@ -244,20 +340,29 @@ export function AccountSettingsPage() {
                       Enable 2FA
                     </button>
                   </div>
-                </motion.div>}
+                </motion.div>
+              )}
 
-              {activeSection === 'preferences' && <motion.div key="preferences" initial={{
-              opacity: 0,
-              x: 20
-            }} animate={{
-              opacity: 1,
-              x: 0
-            }} exit={{
-              opacity: 0,
-              x: -20
-            }} transition={{
-              duration: 0.2
-            }} className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6">
+              {activeSection === "preferences" && (
+                <motion.div
+                  key="preferences"
+                  initial={{
+                    opacity: 0,
+                    x: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: -20,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6"
+                >
                   <h3 className="font-bold text-charcoal mb-6">Preferences</h3>
                   <div className="space-y-6">
                     <div>
@@ -294,37 +399,56 @@ export function AccountSettingsPage() {
                   <button className="mt-6 px-6 py-2 bg-warm-green text-white rounded-lg hover:bg-warm-green/90 transition-colors font-medium">
                     Save Preferences
                   </button>
-                </motion.div>}
+                </motion.div>
+              )}
 
-              {activeSection === 'notifications' && <motion.div key="notifications" initial={{
-              opacity: 0,
-              x: 20
-            }} animate={{
-              opacity: 1,
-              x: 0
-            }} exit={{
-              opacity: 0,
-              x: -20
-            }} transition={{
-              duration: 0.2
-            }} className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6">
+              {activeSection === "notifications" && (
+                <motion.div
+                  key="notifications"
+                  initial={{
+                    opacity: 0,
+                    x: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: -20,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6"
+                >
                   <h3 className="font-bold text-charcoal mb-6">
                     Notification Preferences
                   </h3>
                   <div className="space-y-4">
-                    {[{
-                  label: 'Booking confirmations',
-                  description: 'Get notified when your booking is confirmed'
-                }, {
-                  label: 'Messages',
-                  description: 'Receive notifications for new messages'
-                }, {
-                  label: 'Special offers',
-                  description: 'Get updates about promotions and deals'
-                }, {
-                  label: 'Trip reminders',
-                  description: 'Receive reminders before your trips'
-                }].map((item, idx) => <div key={idx} className="flex items-center justify-between py-3 border-b border-charcoal/10 last:border-0">
+                    {[
+                      {
+                        label: "Booking confirmations",
+                        description:
+                          "Get notified when your booking is confirmed",
+                      },
+                      {
+                        label: "Messages",
+                        description: "Receive notifications for new messages",
+                      },
+                      {
+                        label: "Special offers",
+                        description: "Get updates about promotions and deals",
+                      },
+                      {
+                        label: "Trip reminders",
+                        description: "Receive reminders before your trips",
+                      },
+                    ].map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between py-3 border-b border-charcoal/10 last:border-0"
+                      >
                         <div>
                           <h4 className="font-medium text-charcoal">
                             {item.label}
@@ -334,25 +458,39 @@ export function AccountSettingsPage() {
                           </p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" className="sr-only peer" defaultChecked={idx < 2} />
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            defaultChecked={idx < 2}
+                          />
                           <div className="w-11 h-6 bg-charcoal/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-warm-green"></div>
                         </label>
-                      </div>)}
+                      </div>
+                    ))}
                   </div>
-                </motion.div>}
+                </motion.div>
+              )}
 
-              {activeSection === 'payments' && <motion.div key="payments" initial={{
-              opacity: 0,
-              x: 20
-            }} animate={{
-              opacity: 1,
-              x: 0
-            }} exit={{
-              opacity: 0,
-              x: -20
-            }} transition={{
-              duration: 0.2
-            }} className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6">
+              {activeSection === "payments" && (
+                <motion.div
+                  key="payments"
+                  initial={{
+                    opacity: 0,
+                    x: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: -20,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="bg-white rounded-xl shadow-sm border border-charcoal/10 p-6"
+                >
                   <h3 className="font-bold text-charcoal mb-6">
                     Payment Methods
                   </h3>
@@ -377,10 +515,12 @@ export function AccountSettingsPage() {
                   <button className="px-6 py-2 border border-warm-green text-warm-green rounded-lg hover:bg-warm-green hover:text-white transition-colors font-medium">
                     Add Payment Method
                   </button>
-                </motion.div>}
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }
