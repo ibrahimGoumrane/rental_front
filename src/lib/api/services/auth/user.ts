@@ -4,8 +4,8 @@ import {
   LoginRequest,
   LoginResponse,
   ApiResponse,
-} from "../../types";
-import { api } from "../config";
+} from "../../../types";
+import { api } from "../../config";
 
 class UserService {
   private readonly basePath = "/auth";
