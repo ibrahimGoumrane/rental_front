@@ -2,9 +2,6 @@ import type { ListingProperty } from "@/lib/types/client";
 
 export type { ListingProperty };
 
-// Keep Property as alias for backward compatibility
-export type Property = ListingProperty;
-
 export const PROPERTIES: ListingProperty[] = [
   {
     id: "1",

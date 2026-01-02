@@ -1,6 +1,11 @@
 export { PageHeader } from "./PageHeader";
 export { SettingsSidebar } from "./SettingsSidebar";
 export { GeneralSettings } from "./GeneralSettings";
+export { PropertySettings } from "./PropertySettings";
+export { BookingSettings } from "./BookingSettings";
+export { VerificationSettings } from "./VerificationSettings";
 export { PaymentsSettings } from "./PaymentsSettings";
+export { MessagingSettings } from "./MessagingSettings";
+export { NotificationsSettings } from "./NotificationsSettings";
+export { ApiSettings } from "./ApiSettings";
 export { SecuritySettings } from "./SecuritySettings";
-export { PlaceholderSettings } from "./PlaceholderSettings";

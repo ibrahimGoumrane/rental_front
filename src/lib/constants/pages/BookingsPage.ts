@@ -8,7 +8,7 @@ export const MOCK_BOOKINGS: ClientBooking[] = [
     property: "The Glass Pavilion",
     location: "Montecito, California",
     image:
-      "https://images.unsplash.com/photo-1600596542815-2495db98dada?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=400",
     checkIn: "2024-03-15",
     checkOut: "2024-03-20",
     status: "upcoming",

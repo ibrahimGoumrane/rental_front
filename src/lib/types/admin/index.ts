@@ -290,7 +290,7 @@ export interface AlertsData {
 }
 
 export interface AdminDashboardBooking {
-  id: string;
+  id: number;
   property: {
     name: string;
     location: string;
@@ -308,7 +308,7 @@ export interface AdminDashboardBooking {
 }
 
 export interface ActivityItem {
-  id: string;
+  id: number;
   type: string;
   text: string;
   timestamp: string;

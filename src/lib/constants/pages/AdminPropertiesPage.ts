@@ -9,7 +9,7 @@ export const PROPERTIES_DATA: Property[] = [
     location: "Montecito, California",
     city: "Montecito",
     image:
-      "https://images.unsplash.com/photo-1600596542815-2495db98dada?auto=format&fit=crop&q=80&w=400",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=400",
     type: "villa",
     owner: {
       name: "Eleanor Martinez",

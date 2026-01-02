@@ -1,21 +1,20 @@
+import { AmenitiesSelector } from "@/components/landlord/AddPropertyPage/AmenitiesSelector";
+import { CancellationPolicySelector } from "@/components/landlord/AddPropertyPage/CancellationPolicySelector";
+import { CheckInOutTimes } from "@/components/landlord/AddPropertyPage/CheckInOutTimes";
+import { HouseRulesSelector } from "@/components/landlord/AddPropertyPage/HouseRulesSelector";
+import { LocationForm } from "@/components/landlord/AddPropertyPage/LocationForm";
+import { NavigationButtons } from "@/components/landlord/AddPropertyPage/NavigationButtons";
+import { PageHeader } from "@/components/landlord/AddPropertyPage/PageHeader";
+import { PhotoUploadSection } from "@/components/landlord/AddPropertyPage/PhotoUploadSection";
+import { PricingForm } from "@/components/landlord/AddPropertyPage/PricingForm";
+import { PropertyDetailsForm } from "@/components/landlord/AddPropertyPage/PropertyDetailsForm";
+import { PropertyTypeSelector } from "@/components/landlord/AddPropertyPage/PropertyTypeSelector";
+import { RentalModeSelector } from "@/components/landlord/AddPropertyPage/RentalModeSelector";
+import { StepIndicator } from "@/components/landlord/AddPropertyPage/StepIndicator";
+import { VideoUploadSection } from "@/components/landlord/AddPropertyPage/VideoUploadSection";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ADD_STEPS } from "@/lib/constants/pages/AddPropertyPage";
-import { PageHeader } from "@/components/landlord/AddPropertyPage/PageHeader";
-import { StepIndicator } from "@/components/landlord/AddPropertyPage/StepIndicator";
-import { PhotoUploadSection } from "@/components/landlord/AddPropertyPage/PhotoUploadSection";
-import { VideoUploadSection } from "@/components/landlord/AddPropertyPage/VideoUploadSection";
-import { PropertyTypeSelector } from "@/components/landlord/AddPropertyPage/PropertyTypeSelector";
-import { RentalModeSelector } from "@/components/landlord/AddPropertyPage/RentalModeSelector";
-import { PropertyDetailsForm } from "@/components/landlord/AddPropertyPage/PropertyDetailsForm";
-import { AmenitiesSelector } from "@/components/landlord/AddPropertyPage/AmenitiesSelector";
-import { LocationForm } from "@/components/landlord/AddPropertyPage/LocationForm";
-import { PricingForm } from "@/components/landlord/AddPropertyPage/PricingForm";
-import { CheckInOutTimes } from "@/components/landlord/AddPropertyPage/CheckInOutTimes";
-import { HouseRulesSelector } from "@/components/landlord/AddPropertyPage/HouseRulesSelector";
-import { CancellationPolicySelector } from "@/components/landlord/AddPropertyPage/CancellationPolicySelector";
-import { NavigationButtons } from "@/components/landlord/AddPropertyPage/NavigationButtons";
 
 export function AddPropertyPage() {
   const navigate = useNavigate();
@@ -307,7 +306,7 @@ export function AddPropertyPage() {
 
         <NavigationButtons
           currentStep={currentStep}
-          canProceed={canProceed()}
+          canProceed={!!canProceed()}
           onBack={() => setCurrentStep(Math.max(1, currentStep - 1))}
           onNext={() => setCurrentStep(currentStep + 1)}
           onSubmit={handleSubmit}
