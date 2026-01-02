@@ -1,19 +1,16 @@
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  Calendar,
-  ChevronDown,
-  MapPin,
-  Search,
-  SlidersHorizontal,
-} from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { PropertyCard } from "../components/ui/PropertyCard";
-import { LOCATIONS, PROPERTIES } from "../lib/constants/pages/ListingsPage";
+import { motion } from "framer-motion";
+import { Search } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { PropertyCard } from "@/components/ui/PropertyCard";
+import { LOCATIONS, PROPERTIES } from "@/lib/constants/pages/ListingsPage";
+import { LocationInput } from "@/components/client/ListingsPage/LocationInput";
+import { DateInputs } from "@/components/client/ListingsPage/DateInputs";
+import { FilterDropdown } from "@/components/client/ListingsPage/FilterDropdown";
+import { SortDropdown } from "@/components/client/ListingsPage/SortDropdown";
 
 export function ListingsPage() {
   // Search State
   const [locationQuery, setLocationQuery] = useState("");
-  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [dateError, setDateError] = useState("");
@@ -22,10 +19,7 @@ export function ListingsPage() {
     string | null
   >(null);
   const [filters, setFilters] = useState({
-    priceRange: {
-      min: 0,
-      max: 5000,
-    },
+    priceRange: { min: 0, max: 5000 },
     rating: null as number | null,
     propertyTypes: [] as string[],
     amenities: [] as string[],
@@ -37,35 +31,6 @@ export function ListingsPage() {
     "recommended" | "price-low" | "price-high" | "rating"
   >("recommended");
   const [showSortDropdown, setShowSortDropdown] = useState(false);
-  // Refs for click outside
-  const locationRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<HTMLDivElement>(null);
-  const sortRef = useRef<HTMLDivElement>(null);
-  // Click outside handler
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        locationRef.current &&
-        !locationRef.current.contains(event.target as Node)
-      ) {
-        setShowLocationSuggestions(false);
-      }
-      if (
-        filterRef.current &&
-        !filterRef.current.contains(event.target as Node)
-      ) {
-        // Don't close if clicking inside the dropdown
-      } else {
-        // This logic is tricky with multiple dropdowns, simplified:
-        // We'll handle closing in the dropdown component or specific handlers
-      }
-      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
-        setShowSortDropdown(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
   // Filtered Location Suggestions
   const locationSuggestions = useMemo(() => {
     if (!locationQuery) return [];
@@ -73,6 +38,7 @@ export function ListingsPage() {
       loc.toLowerCase().includes(locationQuery.toLowerCase())
     );
   }, [locationQuery]);
+
   // Date Validation
   useEffect(() => {
     if (checkInDate && checkOutDate) {
@@ -205,113 +171,29 @@ export function ListingsPage() {
         {/* Search & Filter Bar */}
         <motion.div
           className="max-w-6xl mx-auto"
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.4,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
         >
           {/* Main Search Inputs */}
           <div className="bg-white p-2 rounded-xl shadow-xl shadow-charcoal/5 flex flex-col lg:flex-row items-start lg:items-center gap-2 mb-8 border border-charcoal/5 relative z-20">
             {/* Location Input */}
-            <div className="flex-1 w-full relative group" ref={locationRef}>
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <input
-                type="text"
-                value={locationQuery}
-                onChange={(e) => {
-                  setLocationQuery(e.target.value);
-                  setShowLocationSuggestions(true);
-                }}
-                onFocus={() => setShowLocationSuggestions(true)}
-                placeholder="Where would you like to go?"
-                className="w-full pl-12 pr-4 py-4 bg-transparent outline-none text-charcoal placeholder:text-charcoal/40 font-serif text-lg focus:bg-cream/30 transition-colors rounded-lg"
-              />
-              <AnimatePresence>
-                {showLocationSuggestions && locationSuggestions.length > 0 && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border border-charcoal/10 overflow-hidden z-30"
-                  >
-                    {locationSuggestions.map((loc) => (
-                      <button
-                        key={loc}
-                        onClick={() => {
-                          setLocationQuery(loc);
-                          setShowLocationSuggestions(false);
-                        }}
-                        className="w-full text-left px-6 py-3 hover:bg-cream transition-colors flex items-center gap-3 text-charcoal"
-                      >
-                        <MapPin className="w-4 h-4 text-gold" />
-                        {loc}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <LocationInput
+              value={locationQuery}
+              onChange={setLocationQuery}
+              suggestions={locationSuggestions}
+            />
 
             <div className="w-px h-10 bg-charcoal/10 hidden lg:block" />
 
             {/* Date Inputs */}
-            <div className="flex-1 w-full flex flex-col sm:flex-row gap-2 relative group">
-              <div className="flex-1 relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
-                  <Calendar className="w-5 h-5" />
-                </div>
-                <input
-                  type="date"
-                  value={checkInDate}
-                  onChange={(e) => setCheckInDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-transparent outline-none text-charcoal placeholder:text-charcoal/40 font-serif text-lg focus:bg-cream/30 transition-colors rounded-lg appearance-none cursor-pointer"
-                />
-                <span className="absolute left-12 top-2 text-xs text-charcoal/40 font-sans pointer-events-none">
-                  Check-in
-                </span>
-              </div>
-              <div className="w-px h-10 bg-charcoal/10 hidden sm:block self-center" />
-              <div className="flex-1 relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
-                  <Calendar className="w-5 h-5" />
-                </div>
-                <input
-                  type="date"
-                  value={checkOutDate}
-                  min={checkInDate}
-                  onChange={(e) => setCheckOutDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-transparent outline-none text-charcoal placeholder:text-charcoal/40 font-serif text-lg focus:bg-cream/30 transition-colors rounded-lg appearance-none cursor-pointer"
-                />
-                <span className="absolute left-12 top-2 text-xs text-charcoal/40 font-sans pointer-events-none">
-                  Check-out
-                </span>
-              </div>
-
-              {dateError && (
-                <div className="absolute -bottom-6 left-0 text-red-500 text-xs font-medium">
-                  {dateError}
-                </div>
-              )}
-            </div>
+            <DateInputs
+              checkIn={checkInDate}
+              checkOut={checkOutDate}
+              onCheckInChange={setCheckInDate}
+              onCheckOutChange={setCheckOutDate}
+              error={dateError}
+            />
 
             <button
               onClick={() => {
@@ -325,483 +207,288 @@ export function ListingsPage() {
           </div>
 
           {/* Filters */}
-          <div
-            className="flex flex-wrap items-center justify-center gap-4 relative z-10"
-            ref={filterRef}
-          >
+          <div className="flex flex-wrap items-center justify-center gap-4 relative z-10">
             {/* Price Filter */}
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setActiveFilterDropdown(
-                    activeFilterDropdown === "price" ? null : "price"
-                  )
-                }
-                className={`px-6 py-2 border ${
-                  filters.priceRange.min > 0 || filters.priceRange.max < 5000
-                    ? "border-gold bg-gold/10 text-charcoal"
-                    : "border-charcoal/20 text-charcoal/60 hover:border-charcoal/40"
-                } rounded-full text-sm transition-all duration-300 flex items-center gap-2`}
-              >
-                Price Range
-                <ChevronDown
-                  className={`w-3 h-3 transition-transform duration-300 ${
-                    activeFilterDropdown === "price" ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence>
-                {activeFilterDropdown === "price" && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-charcoal/10 p-6 z-30"
-                  >
-                    <h3 className="font-bold text-charcoal mb-4">
-                      Price Range (per night)
-                    </h3>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="flex-1">
-                        <label className="text-xs text-charcoal/60 mb-1 block">
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          value={filters.priceRange.min}
-                          onChange={(e) =>
-                            setFilters({
-                              ...filters,
-                              priceRange: {
-                                ...filters.priceRange,
-                                min: Number(e.target.value),
-                              },
-                            })
-                          }
-                          className="w-full p-2 border border-charcoal/20 rounded-lg"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label className="text-xs text-charcoal/60 mb-1 block">
-                          Max
-                        </label>
-                        <input
-                          type="number"
-                          value={filters.priceRange.max}
-                          onChange={(e) =>
-                            setFilters({
-                              ...filters,
-                              priceRange: {
-                                ...filters.priceRange,
-                                max: Number(e.target.value),
-                              },
-                            })
-                          }
-                          className="w-full p-2 border border-charcoal/20 rounded-lg"
-                        />
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setActiveFilterDropdown(null)}
-                      className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
-                    >
-                      Apply
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <FilterDropdown
+              isOpen={activeFilterDropdown === "price"}
+              onToggle={() =>
+                setActiveFilterDropdown(
+                  activeFilterDropdown === "price" ? null : "price"
+                )
+              }
+              label="Price Range"
+              hasActive={
+                filters.priceRange.min > 0 || filters.priceRange.max < 5000
+              }
+            >
+              <div className="w-64">
+                <h3 className="font-bold text-charcoal mb-4">
+                  Price Range (per night)
+                </h3>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex-1">
+                    <label className="text-xs text-charcoal/60 mb-1 block">
+                      Min
+                    </label>
+                    <input
+                      type="number"
+                      value={filters.priceRange.min}
+                      onChange={(e) =>
+                        setFilters({
+                          ...filters,
+                          priceRange: {
+                            ...filters.priceRange,
+                            min: Number(e.target.value),
+                          },
+                        })
+                      }
+                      className="w-full p-2 border border-charcoal/20 rounded-lg"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs text-charcoal/60 mb-1 block">
+                      Max
+                    </label>
+                    <input
+                      type="number"
+                      value={filters.priceRange.max}
+                      onChange={(e) =>
+                        setFilters({
+                          ...filters,
+                          priceRange: {
+                            ...filters.priceRange,
+                            max: Number(e.target.value),
+                          },
+                        })
+                      }
+                      className="w-full p-2 border border-charcoal/20 rounded-lg"
+                    />
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveFilterDropdown(null)}
+                  className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
+                >
+                  Apply
+                </button>
+              </div>
+            </FilterDropdown>
 
             {/* Property Type Filter */}
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setActiveFilterDropdown(
-                    activeFilterDropdown === "type" ? null : "type"
-                  )
-                }
-                className={`px-6 py-2 border ${
-                  filters.propertyTypes.length > 0
-                    ? "border-gold bg-gold/10 text-charcoal"
-                    : "border-charcoal/20 text-charcoal/60 hover:border-charcoal/40"
-                } rounded-full text-sm transition-all duration-300 flex items-center gap-2`}
-              >
-                Property Type
-                {filters.propertyTypes.length > 0 && (
-                  <span className="bg-gold text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
-                    {filters.propertyTypes.length}
-                  </span>
-                )}
-                <ChevronDown
-                  className={`w-3 h-3 transition-transform duration-300 ${
-                    activeFilterDropdown === "type" ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence>
-                {activeFilterDropdown === "type" && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-charcoal/10 p-6 z-30"
-                  >
-                    <h3 className="font-bold text-charcoal mb-4">
-                      Property Type
-                    </h3>
-                    <div className="space-y-3 mb-6">
-                      {["entire", "private", "shared"].map((type) => (
-                        <label
-                          key={type}
-                          className="flex items-center gap-3 cursor-pointer"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={filters.propertyTypes.includes(type)}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setFilters({
-                                  ...filters,
-                                  propertyTypes: [
-                                    ...filters.propertyTypes,
-                                    type,
-                                  ],
-                                });
-                              } else {
-                                setFilters({
-                                  ...filters,
-                                  propertyTypes: filters.propertyTypes.filter(
-                                    (t) => t !== type
-                                  ),
-                                });
-                              }
-                            }}
-                            className="w-4 h-4 accent-gold"
-                          />
-                          <span className="capitalize">
-                            {type === "entire" ? "Entire home" : type + " room"}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => setActiveFilterDropdown(null)}
-                      className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
+            <FilterDropdown
+              isOpen={activeFilterDropdown === "type"}
+              onToggle={() =>
+                setActiveFilterDropdown(
+                  activeFilterDropdown === "type" ? null : "type"
+                )
+              }
+              label="Property Type"
+              hasActive={filters.propertyTypes.length > 0}
+              activeCount={filters.propertyTypes.length}
+            >
+              <div className="w-56">
+                <h3 className="font-bold text-charcoal mb-4">Property Type</h3>
+                <div className="space-y-3 mb-6">
+                  {["entire", "private", "shared"].map((type) => (
+                    <label
+                      key={type}
+                      className="flex items-center gap-3 cursor-pointer"
                     >
-                      Apply
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+                      <input
+                        type="checkbox"
+                        checked={filters.propertyTypes.includes(type)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setFilters({
+                              ...filters,
+                              propertyTypes: [...filters.propertyTypes, type],
+                            });
+                          } else {
+                            setFilters({
+                              ...filters,
+                              propertyTypes: filters.propertyTypes.filter(
+                                (t) => t !== type
+                              ),
+                            });
+                          }
+                        }}
+                        className="w-4 h-4 accent-gold"
+                      />
+                      <span className="capitalize">
+                        {type === "entire" ? "Entire home" : type + " room"}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setActiveFilterDropdown(null)}
+                  className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
+                >
+                  Apply
+                </button>
+              </div>
+            </FilterDropdown>
 
             {/* Amenities Filter */}
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setActiveFilterDropdown(
-                    activeFilterDropdown === "amenities" ? null : "amenities"
-                  )
-                }
-                className={`px-6 py-2 border ${
-                  filters.amenities.length > 0
-                    ? "border-gold bg-gold/10 text-charcoal"
-                    : "border-charcoal/20 text-charcoal/60 hover:border-charcoal/40"
-                } rounded-full text-sm transition-all duration-300 flex items-center gap-2`}
-              >
-                Amenities
-                {filters.amenities.length > 0 && (
-                  <span className="bg-gold text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
-                    {filters.amenities.length}
-                  </span>
-                )}
-                <ChevronDown
-                  className={`w-3 h-3 transition-transform duration-300 ${
-                    activeFilterDropdown === "amenities" ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence>
-                {activeFilterDropdown === "amenities" && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-charcoal/10 p-6 z-30"
-                  >
-                    <h3 className="font-bold text-charcoal mb-4">Amenities</h3>
-                    <div className="space-y-3 mb-6">
-                      {["Wifi", "Pool", "Kitchen", "Parking", "AC"].map(
-                        (amenity) => (
-                          <label
-                            key={amenity}
-                            className="flex items-center gap-3 cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={filters.amenities.includes(amenity)}
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  setFilters({
-                                    ...filters,
-                                    amenities: [...filters.amenities, amenity],
-                                  });
-                                } else {
-                                  setFilters({
-                                    ...filters,
-                                    amenities: filters.amenities.filter(
-                                      (a) => a !== amenity
-                                    ),
-                                  });
-                                }
-                              }}
-                              className="w-4 h-4 accent-gold"
-                            />
-                            <span>{amenity}</span>
-                          </label>
-                        )
-                      )}
-                    </div>
-                    <button
-                      onClick={() => setActiveFilterDropdown(null)}
-                      className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
-                    >
-                      Apply
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <FilterDropdown
+              isOpen={activeFilterDropdown === "amenities"}
+              onToggle={() =>
+                setActiveFilterDropdown(
+                  activeFilterDropdown === "amenities" ? null : "amenities"
+                )
+              }
+              label="Amenities"
+              hasActive={filters.amenities.length > 0}
+              activeCount={filters.amenities.length}
+            >
+              <div className="w-56">
+                <h3 className="font-bold text-charcoal mb-4">Amenities</h3>
+                <div className="space-y-3 mb-6">
+                  {["Wifi", "Pool", "Kitchen", "Parking", "AC"].map(
+                    (amenity) => (
+                      <label
+                        key={amenity}
+                        className="flex items-center gap-3 cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={filters.amenities.includes(amenity)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setFilters({
+                                ...filters,
+                                amenities: [...filters.amenities, amenity],
+                              });
+                            } else {
+                              setFilters({
+                                ...filters,
+                                amenities: filters.amenities.filter(
+                                  (a) => a !== amenity
+                                ),
+                              });
+                            }
+                          }}
+                          className="w-4 h-4 accent-gold"
+                        />
+                        <span>{amenity}</span>
+                      </label>
+                    )
+                  )}
+                </div>
+                <button
+                  onClick={() => setActiveFilterDropdown(null)}
+                  className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
+                >
+                  Apply
+                </button>
+              </div>
+            </FilterDropdown>
 
             {/* More Filters */}
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setActiveFilterDropdown(
-                    activeFilterDropdown === "more" ? null : "more"
-                  )
-                }
-                className={`px-6 py-2 border ${
-                  filters.bedrooms || filters.rating || filters.available
-                    ? "border-gold bg-gold/10 text-charcoal"
-                    : "border-charcoal/20 text-charcoal/60 hover:border-charcoal/40"
-                } rounded-full text-sm transition-all duration-300 flex items-center gap-2`}
-              >
-                More Filters
-                <ChevronDown
-                  className={`w-3 h-3 transition-transform duration-300 ${
-                    activeFilterDropdown === "more" ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence>
-                {activeFilterDropdown === "more" && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    className="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-charcoal/10 p-6 z-30"
-                  >
-                    <div className="space-y-6 mb-6">
-                      {/* Bedrooms */}
-                      <div>
-                        <h3 className="font-bold text-charcoal mb-3">
-                          Bedrooms
-                        </h3>
-                        <div className="flex gap-2">
-                          {[1, 2, 3, 4].map((num) => (
-                            <button
-                              key={num}
-                              onClick={() =>
-                                setFilters({
-                                  ...filters,
-                                  bedrooms:
-                                    filters.bedrooms === num ? null : num,
-                                })
-                              }
-                              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
-                                filters.bedrooms === num
-                                  ? "bg-charcoal text-white border-charcoal"
-                                  : "border-charcoal/20 text-charcoal hover:border-charcoal"
-                              }`}
-                            >
-                              {num}+
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Rating */}
-                      <div>
-                        <h3 className="font-bold text-charcoal mb-3">Rating</h3>
-                        <div className="flex gap-2">
-                          {[4, 4.5, 4.8].map((rating) => (
-                            <button
-                              key={rating}
-                              onClick={() =>
-                                setFilters({
-                                  ...filters,
-                                  rating:
-                                    filters.rating === rating ? null : rating,
-                                })
-                              }
-                              className={`px-3 py-1 rounded-full border text-sm transition-colors ${
-                                filters.rating === rating
-                                  ? "bg-charcoal text-white border-charcoal"
-                                  : "border-charcoal/20 text-charcoal hover:border-charcoal"
-                              }`}
-                            >
-                              {rating}+
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Availability */}
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-charcoal">
-                          Available only
-                        </h3>
+            <FilterDropdown
+              isOpen={activeFilterDropdown === "more"}
+              onToggle={() =>
+                setActiveFilterDropdown(
+                  activeFilterDropdown === "more" ? null : "more"
+                )
+              }
+              label="More Filters"
+              hasActive={
+                !!(filters.bedrooms || filters.rating || filters.available)
+              }
+            >
+              <div className="w-72">
+                <div className="space-y-6 mb-6">
+                  {/* Bedrooms */}
+                  <div>
+                    <h3 className="font-bold text-charcoal mb-3">Bedrooms</h3>
+                    <div className="flex gap-2">
+                      {[1, 2, 3, 4].map((num) => (
                         <button
+                          key={num}
                           onClick={() =>
                             setFilters({
                               ...filters,
-                              available: !filters.available,
+                              bedrooms: filters.bedrooms === num ? null : num,
                             })
                           }
-                          className={`w-12 h-6 rounded-full transition-colors relative ${
-                            filters.available ? "bg-gold" : "bg-charcoal/20"
+                          className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                            filters.bedrooms === num
+                              ? "bg-charcoal text-white border-charcoal"
+                              : "border-charcoal/20 text-charcoal hover:border-charcoal"
                           }`}
                         >
-                          <div
-                            className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${
-                              filters.available ? "left-7" : "left-1"
-                            }`}
-                          />
+                          {num}+
                         </button>
-                      </div>
+                      ))}
                     </div>
+                  </div>
+
+                  {/* Rating */}
+                  <div>
+                    <h3 className="font-bold text-charcoal mb-3">Rating</h3>
+                    <div className="flex gap-2">
+                      {[4, 4.5, 4.8].map((rating) => (
+                        <button
+                          key={rating}
+                          onClick={() =>
+                            setFilters({
+                              ...filters,
+                              rating: filters.rating === rating ? null : rating,
+                            })
+                          }
+                          className={`px-3 py-1 rounded-full border text-sm transition-colors ${
+                            filters.rating === rating
+                              ? "bg-charcoal text-white border-charcoal"
+                              : "border-charcoal/20 text-charcoal hover:border-charcoal"
+                          }`}
+                        >
+                          {rating}+
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Availability */}
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-charcoal">Available only</h3>
                     <button
-                      onClick={() => setActiveFilterDropdown(null)}
-                      className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
+                      onClick={() =>
+                        setFilters({
+                          ...filters,
+                          available: !filters.available,
+                        })
+                      }
+                      className={`w-12 h-6 rounded-full transition-colors relative ${
+                        filters.available ? "bg-gold" : "bg-charcoal/20"
+                      }`}
                     >
-                      Apply
+                      <div
+                        className={`w-4 h-4 bg-white rounded-full absolute top-1 transition-transform ${
+                          filters.available ? "left-7" : "left-1"
+                        }`}
+                      />
                     </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveFilterDropdown(null)}
+                  className="w-full py-2 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-medium text-sm"
+                >
+                  Apply
+                </button>
+              </div>
+            </FilterDropdown>
 
             <div className="w-px h-6 bg-charcoal/10 mx-2 hidden md:block" />
 
             {/* Sort Dropdown */}
-            <div className="relative" ref={sortRef}>
-              <button
-                onClick={() => setShowSortDropdown(!showSortDropdown)}
-                className="flex items-center gap-2 text-charcoal/60 hover:text-charcoal transition-colors text-sm font-medium"
-              >
-                <SlidersHorizontal className="w-4 h-4" />
-                <span>
-                  Sort by:{" "}
-                  {sortBy === "recommended"
-                    ? "Recommended"
-                    : sortBy === "price-low"
-                    ? "Price: Low to High"
-                    : sortBy === "price-high"
-                    ? "Price: High to Low"
-                    : "Rating"}
-                </span>
-              </button>
-              <AnimatePresence>
-                {showSortDropdown && (
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-charcoal/10 py-2 z-30"
-                  >
-                    {[
-                      {
-                        value: "recommended",
-                        label: "Recommended",
-                      },
-                      {
-                        value: "price-low",
-                        label: "Price: Low to High",
-                      },
-                      {
-                        value: "price-high",
-                        label: "Price: High to Low",
-                      },
-                      {
-                        value: "rating",
-                        label: "Rating: High to Low",
-                      },
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          setSortBy(option.value as any);
-                          setShowSortDropdown(false);
-                        }}
-                        className={`w-full text-left px-4 py-2 hover:bg-cream transition-colors text-sm ${
-                          sortBy === option.value
-                            ? "font-bold text-charcoal"
-                            : "text-charcoal/80"
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <SortDropdown
+              value={sortBy}
+              onChange={setSortBy}
+              isOpen={showSortDropdown}
+              onToggle={() => setShowSortDropdown(!showSortDropdown)}
+            />
 
             {/* Clear Filters */}
             {activeFilterCount > 0 && (

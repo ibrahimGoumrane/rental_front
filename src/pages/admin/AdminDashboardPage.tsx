@@ -1,36 +1,25 @@
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  Activity,
-  AlertCircle,
-  Bell,
-  Calendar,
-  DollarSign,
-  FileText,
-  Flag,
-  Home,
-  MessageSquare,
-  Shield,
-  TrendingUp,
-  Users,
-  X,
-} from "lucide-react";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import {
   DASHBOARD_DATA,
   PLATFORM_ACTIVITY,
   RECENT_BOOKINGS,
   REVENUE_DATA,
-} from "../lib/constants/pages/AdminDashboardPage";
+} from "@/lib/constants/pages/AdminDashboardPage";
+import { ActivityStream } from "@/components/admin/AdminDashboardPage/ActivityStream";
+import { AlertsSection } from "@/components/admin/AdminDashboardPage/AlertsSection";
+import { BroadcastModal } from "@/components/admin/AdminDashboardPage/BroadcastModal";
+import { KPICards } from "@/components/admin/AdminDashboardPage/KPICards";
+import { QuickActions } from "@/components/admin/AdminDashboardPage/QuickActions";
+import { RevenueChart } from "@/components/admin/AdminDashboardPage/RevenueChart";
+import { VerificationChart } from "@/components/admin/AdminDashboardPage/VerificationChart";
 
 export function AdminDashboardPage() {
-  const navigate = useNavigate();
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [showBroadcastModal, setShowBroadcastModal] = useState(false);
   const [broadcastTitle, setBroadcastTitle] = useState("");
   const [broadcastMessage, setBroadcastMessage] = useState("");
+
   const handleBroadcastSend = () => {
-    // Send broadcast notification logic here
     console.log("Broadcasting:", {
       title: broadcastTitle,
       message: broadcastMessage,
@@ -39,6 +28,7 @@ export function AdminDashboardPage() {
     setBroadcastTitle("");
     setBroadcastMessage("");
   };
+
   const getActivityColor = (type: string) => {
     switch (type) {
       case "user":
@@ -51,6 +41,7 @@ export function AdminDashboardPage() {
         return "text-charcoal";
     }
   };
+
   const getActivityBg = (type: string) => {
     switch (type) {
       case "user":
@@ -63,19 +54,14 @@ export function AdminDashboardPage() {
         return "bg-charcoal/10";
     }
   };
+
   return (
     <div className="min-h-screen bg-cream pt-24 pb-12 px-6 md:px-12">
       <div className="max-w-[1800px] mx-auto">
         {/* Header */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
           <h1 className="font-serif text-5xl md:text-6xl text-charcoal mb-4">
@@ -90,243 +76,51 @@ export function AdminDashboardPage() {
           {/* Main Content Area */}
           <div className="xl:col-span-9 space-y-8">
             {/* KPI Cards */}
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-              initial="hidden"
-              animate="show"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                },
-                show: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.1,
-                  },
-                },
-              }}
-            >
-              {/* Total Users Card - NOW CLICKABLE */}
-              <motion.div
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                }}
-                onMouseEnter={() => setHoveredCard("users")}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <Link
-                  to="/admin/users"
-                  className="block bg-sand rounded-2xl p-6 border border-charcoal/5 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group cursor-pointer"
-                >
-                  {hoveredCard === "users" && (
-                    <div className="absolute inset-0 bg-gold/10 pointer-events-none" />
-                  )}
-                  <div className="flex items-start justify-between mb-4 relative z-10">
-                    <div>
-                      <p className="text-xs uppercase tracking-widest text-charcoal/60 font-medium mb-2">
-                        Total Users
-                      </p>
-                      <h3 className="font-serif text-4xl font-bold text-charcoal mb-3">
-                        {DASHBOARD_DATA.users.total.toLocaleString()}
-                      </h3>
-                      <div className="space-y-1 text-sm text-charcoal/70">
-                        <p>
-                          Guests: {DASHBOARD_DATA.users.guests.toLocaleString()}
-                        </p>
-                        <p>
-                          Hosts: {DASHBOARD_DATA.users.hosts.toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 rounded-full bg-warm-green/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Users className="w-6 h-6 text-warm-green" />
-                    </div>
-                  </div>
-                  <div className="flex items-center text-sm text-warm-green relative z-10">
-                    <TrendingUp className="w-4 h-4 mr-1" />
-                    <span>
-                      +{DASHBOARD_DATA.users.monthlyGrowth} this month (
-                      {DASHBOARD_DATA.users.percentageChange}%)
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
+            <KPICards data={DASHBOARD_DATA} />
 
-              {/* Properties Listed Card - NOW CLICKABLE */}
-              <motion.div
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                }}
-                onMouseEnter={() => setHoveredCard("properties")}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <Link
-                  to="/admin/properties"
-                  className="block bg-sand rounded-2xl p-6 border border-charcoal/5 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group cursor-pointer"
-                >
-                  {hoveredCard === "properties" && (
-                    <div className="absolute inset-0 bg-gold/10 pointer-events-none" />
-                  )}
-                  <div className="flex items-start justify-between mb-4 relative z-10">
-                    <div>
-                      <p className="text-xs uppercase tracking-widest text-charcoal/60 font-medium mb-2">
-                        Properties Listed
-                      </p>
-                      <h3 className="font-serif text-4xl font-bold text-charcoal mb-3">
-                        {DASHBOARD_DATA.properties.total.toLocaleString()}
-                      </h3>
-                      <div className="space-y-1 text-sm text-charcoal/70">
-                        <p>
-                          Published:{" "}
-                          {DASHBOARD_DATA.properties.published.toLocaleString()}
-                        </p>
-                        <p className="flex items-center">
-                          Pending: {DASHBOARD_DATA.properties.pending}
-                          <span className="ml-2 px-2 py-0.5 bg-gold text-white text-xs font-bold rounded-full">
-                            {DASHBOARD_DATA.properties.pending}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Home className="w-6 h-6 text-terracotta" />
-                    </div>
-                  </div>
-                  <p className="text-sm text-charcoal/60 relative z-10">
-                    Average {DASHBOARD_DATA.properties.weeklyAverage} new
-                    listings/week
-                  </p>
-                </Link>
-              </motion.div>
+            {/* Alerts & Pending Actions */}
+            <AlertsSection alerts={DASHBOARD_DATA.alerts} />
 
-              {/* Active Reservations Card - NOW CLICKABLE */}
-              <motion.div
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                }}
-                onMouseEnter={() => setHoveredCard("reservations")}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <Link
-                  to="/admin/reservations"
-                  className="block bg-sand rounded-2xl p-6 border border-charcoal/5 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group cursor-pointer"
-                >
-                  {hoveredCard === "reservations" && (
-                    <div className="absolute inset-0 bg-gold/10 pointer-events-none" />
-                  )}
-                  <div className="flex items-start justify-between mb-4 relative z-10">
-                    <div>
-                      <p className="text-xs uppercase tracking-widest text-charcoal/60 font-medium mb-2">
-                        Active Reservations
-                      </p>
-                      <h3 className="font-serif text-4xl font-bold text-charcoal mb-3">
-                        {DASHBOARD_DATA.reservations.total.toLocaleString()}
-                      </h3>
-                      <div className="space-y-1 text-sm text-charcoal/70">
-                        <p>
-                          Upcoming:{" "}
-                          {DASHBOARD_DATA.reservations.upcoming.toLocaleString()}
-                        </p>
-                        <p>
-                          In Progress: {DASHBOARD_DATA.reservations.inProgress}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 rounded-full bg-warm-green/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Calendar className="w-6 h-6 text-warm-green" />
-                    </div>
-                  </div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between text-sm mb-2">
-                      <span className="text-charcoal/70">Occupancy Rate</span>
-                      <span className="font-bold text-warm-green">
-                        {DASHBOARD_DATA.reservations.occupancyRate}%
-                      </span>
-                    </div>
-                    <div className="w-full h-2 bg-charcoal/10 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{
-                          width: 0,
-                        }}
-                        animate={{
-                          width: `${DASHBOARD_DATA.reservations.occupancyRate}%`,
-                        }}
-                        transition={{
-                          duration: 1,
-                          delay: 0.5,
-                        }}
-                        className="h-full bg-warm-green rounded-full"
-                      />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
+            {/* Activity Streams */}
+            <ActivityStream
+              bookings={RECENT_BOOKINGS}
+              activities={PLATFORM_ACTIVITY}
+              getActivityColor={getActivityColor}
+              getActivityBg={getActivityBg}
+            />
 
-              {/* Revenue & Commission Card - NOW CLICKABLE */}
-              <motion.div
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                }}
-                onMouseEnter={() => setHoveredCard("revenue")}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <Link
-                  to="/admin/billing"
-                  className="block bg-sand rounded-2xl p-6 border border-charcoal/5 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group cursor-pointer"
-                >
-                  {hoveredCard === "revenue" && (
-                    <div className="absolute inset-0 bg-gold/10 pointer-events-none" />
-                  )}
-                  <div className="flex items-start justify-between mb-4 relative z-10">
-                    <div>
-                      <p className="text-xs uppercase tracking-widest text-charcoal/60 font-medium mb-2">
-                        Monthly Revenue
-                      </p>
-                      <h3 className="font-serif text-4xl font-bold text-charcoal mb-3">
-                        ${DASHBOARD_DATA.revenue.monthly.toLocaleString()}
-                      </h3>
-                      <div className="space-y-1 text-sm">
-                        <p className="text-gold font-medium">
-                          Commission: $
-                          {DASHBOARD_DATA.revenue.commission.toLocaleString()} (
-                          {DASHBOARD_DATA.revenue.commissionRate}%)
-                        </p>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <DollarSign className="w-6 h-6 text-gold" />
-                    </div>
-                  </div>
-                  <div className="flex items-center text-sm text-warm-green relative z-10">
-                    <TrendingUp className="w-4 h-4 mr-1" />
+            {/* Revenue Chart */}
+            <RevenueChart data={REVENUE_DATA} />
+          </div>
+
+          {/* Right Sidebar - Quick Actions */}
+          <div className="xl:col-span-3">
+            <QuickActions
+              userVerifications={DASHBOARD_DATA.alerts.userVerifications}
+              propertyVerifications={
+                DASHBOARD_DATA.alerts.propertyVerifications
+              }
+              onBroadcastClick={() => setShowBroadcastModal(true)}
+            />
+            <VerificationChart />
+          </div>
+        </div>
+      </div>
+
+      {/* Broadcast Notification Modal */}
+      <BroadcastModal
+        isOpen={showBroadcastModal}
+        onClose={() => setShowBroadcastModal(false)}
+        title={broadcastTitle}
+        message={broadcastMessage}
+        onTitleChange={setBroadcastTitle}
+        onMessageChange={setBroadcastMessage}
+        onSend={handleBroadcastSend}
+      />
+    </div>
+  );
+}
+
                     <span>
                       +{DASHBOARD_DATA.revenue.percentageChange}% vs last month
                     </span>

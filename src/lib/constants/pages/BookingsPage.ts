@@ -1,4 +1,8 @@
-export const MOCK_BOOKINGS = [
+import type { ClientBooking } from "@/lib/types/client";
+
+export type { ClientBooking };
+
+export const MOCK_BOOKINGS: ClientBooking[] = [
   {
     id: "1",
     property: "The Glass Pavilion",

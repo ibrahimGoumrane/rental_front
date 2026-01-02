@@ -6,8 +6,8 @@ import {
   InternalServerError,
   NotFoundError,
   UnauthorizedError,
-} from "../../error/index";
-import { getApiAddress } from "../../settings/index";
+} from "@/lib/error/index";
+import { getApiAddress } from "@/lib/settings/index";
 import { tokenManager } from "./tokenManager";
 
 // Error response handler

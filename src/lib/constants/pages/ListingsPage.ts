@@ -1,22 +1,11 @@
-export interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: string;
-  priceValue: number;
-  image: string;
-  videoUrl: string;
-  size: "large" | "medium" | "small";
-  rating: number;
-  propertyType: string;
-  amenities: string[];
-  bedrooms: number;
-  beds: number;
-  bathrooms: number;
-  available: boolean;
-}
+import type { ListingProperty } from "@/lib/types/client";
 
-export const PROPERTIES: Property[] = [
+export type { ListingProperty };
+
+// Keep Property as alias for backward compatibility
+export type Property = ListingProperty;
+
+export const PROPERTIES: ListingProperty[] = [
   {
     id: "1",
     title: "The Glass Pavilion",

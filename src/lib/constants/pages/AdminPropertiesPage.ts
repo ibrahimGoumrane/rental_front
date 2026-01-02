@@ -1,42 +1,8 @@
-export interface PropertyOwner {
-  name: string;
-  avatar: string | null;
-  initials?: string;
-  verified: boolean;
-}
+import type { Property, PropertyOwner, Collection } from "@/lib/types/admin";
 
-export interface MockProperty {
-  id: number;
-  title: string;
-  location: string;
-  city: string;
-  image: string;
-  type: "villa" | "apartment" | "house" | "studio";
-  owner: PropertyOwner;
-  status: "active" | "pending" | "suspended";
-  verification: "verified" | "pending" | "rejected";
-  price: number;
-  bookings: number;
-  revenue: number;
-  commission: number;
-  rating: number;
-  reviewCount: number;
-  featured: boolean;
-  bedrooms: number;
-  guests: number;
-  suspendedDate?: string;
-  autoDeleteDate?: string;
-}
+export type { Property, PropertyOwner, Collection };
 
-export interface Collection {
-  id: number;
-  name: string;
-  propertyCount: number;
-  createdDate: string;
-  description: string;
-}
-
-export const ADMIN_MOCK_PROPERTIES: MockProperty[] = [
+export const PROPERTIES_DATA: Property[] = [
   {
     id: 1,
     title: "The Glass Pavilion",
@@ -49,6 +15,7 @@ export const ADMIN_MOCK_PROPERTIES: MockProperty[] = [
       name: "Eleanor Martinez",
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100",
+      initials: "EM",
       verified: true,
     },
     status: "active",
@@ -75,6 +42,7 @@ export const ADMIN_MOCK_PROPERTIES: MockProperty[] = [
       name: "Marco Rossi",
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100",
+      initials: "MR",
       verified: true,
     },
     status: "active",
@@ -153,6 +121,7 @@ export const ADMIN_MOCK_PROPERTIES: MockProperty[] = [
       name: "Sarah Jenkins",
       avatar:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100",
+      initials: "SJ",
       verified: true,
     },
     status: "suspended",

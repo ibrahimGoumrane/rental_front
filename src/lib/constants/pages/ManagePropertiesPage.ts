@@ -1,4 +1,8 @@
-export const MANAGE_MOCK_PROPERTIES = [
+import type { ManageProperty } from "@/lib/types/landlord";
+
+export type { ManageProperty };
+
+export const MANAGE_MOCK_PROPERTIES: ManageProperty[] = [
   {
     id: "1",
     title: "The Glass Pavilion",

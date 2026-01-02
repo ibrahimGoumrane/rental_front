@@ -1,29 +1,8 @@
-export interface UserVerification {
-  status: "verified" | "pending" | "rejected";
-  document: string;
-  documentUrl: string | null;
-  date: string | null;
-}
+import type { User, UserVerification } from "@/lib/types/admin";
 
-export interface MockUser {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  avatar: string | null;
-  initials?: string;
-  type: "guest" | "host" | "both" | "admin";
-  verification: UserVerification;
-  bookings: number;
-  properties: number;
-  totalBookings?: number;
-  status: "active" | "suspended";
-  suspendedUntil?: string;
-  registered: string;
-  lastActive: string;
-}
+export type { User, UserVerification };
 
-export const MOCK_USERS: MockUser[] = [
+export const USERS_DATA: User[] = [
   {
     id: 1,
     name: "Sarah Jenkins",

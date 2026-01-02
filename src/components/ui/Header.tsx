@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { translations } from "../../lib/constants/components/Header";
+import { translations } from "@/lib/constants/components/Header";
 
 // Add landlord mode prop
 export function Header({

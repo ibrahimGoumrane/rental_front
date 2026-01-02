@@ -1,28 +1,10 @@
-export interface EarningsData {
-  thisMonth: number;
-  lastMonth: number;
-  totalAllTime: number;
-  upcomingPayouts: number;
-  commission: number;
-}
+import type {
+  EarningsData,
+  MonthlyEarning,
+  PropertyEarning,
+} from "@/lib/types/landlord";
 
-export interface MonthlyEarning {
-  month: string;
-  gross: number;
-  net: number;
-}
-
-export interface PropertyEarning {
-  id: string;
-  name: string;
-  location: string;
-  image: string;
-  bookings: number;
-  gross: number;
-  commission: number;
-  net: number;
-  avgPerBooking: number;
-}
+export type { EarningsData, MonthlyEarning, PropertyEarning };
 
 export const MOCK_EARNINGS_DATA: EarningsData = {
   thisMonth: 12450,

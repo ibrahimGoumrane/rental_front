@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import {
   CATEGORIES,
   RatingCategory,
-} from "../../lib/constants/components/RatingForm";
+} from "@/lib/constants/components/RatingForm";
 
 export function RatingForm({
-  propertyId,
+  propertyId: _propertyId,
   onCancel,
 }: {
   propertyId: string;

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChatInterface } from "../components/ui/ChatInterface";
+import { ChatInterface } from "@/components/ui/ChatInterface";
 export function MessagesPage() {
   return (
     <motion.div

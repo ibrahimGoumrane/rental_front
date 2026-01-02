@@ -10,7 +10,7 @@ import {
 import {
   INITIAL_MESSAGES,
   Message,
-} from "../../lib/constants/components/ChatInterface";
+} from "@/lib/constants/components/ChatInterface";
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [inputText, setInputText] = useState("");

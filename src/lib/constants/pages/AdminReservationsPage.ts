@@ -1,47 +1,21 @@
-export interface ReservationProperty {
-  name: string;
-  location: string;
-  image: string;
-  id: string;
-}
+import type {
+  Reservation,
+  ReservationProperty,
+  ReservationUser,
+  ReservationBooking,
+} from "@/lib/types/admin";
 
-export interface ReservationUser {
-  name: string;
-  avatar: string | null;
-  initials?: string;
-  verified: boolean;
-  previousBookings?: number;
-}
+export type {
+  Reservation,
+  ReservationProperty,
+  ReservationUser,
+  ReservationBooking,
+};
 
-export interface ReservationBooking {
-  id: string;
-  dates: string;
-  status: "completed" | "in-progress" | "upcoming";
-}
+// Keep MockReservation as alias for backward compatibility
+export type MockReservation = Reservation;
 
-export interface MockReservation {
-  id: string;
-  property: ReservationProperty;
-  guest: ReservationUser;
-  host: ReservationUser;
-  checkIn: string;
-  checkOut: string;
-  nights: number;
-  total: number;
-  commission: number;
-  status:
-    | "confirmed"
-    | "requested"
-    | "cancelled-guest"
-    | "cancelled-host"
-    | "checked-in"
-    | "completed"
-    | "disputed"
-    | "rejected";
-  daysUntil: number;
-}
-
-export const MOCK_RESERVATIONS: MockReservation[] = [
+export const MOCK_RESERVATIONS: Reservation[] = [
   {
     id: "BK-2024-12847",
     property: {

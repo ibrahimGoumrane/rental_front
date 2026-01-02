@@ -10,109 +10,19 @@ import {
   MapPin,
   Key,
   Sparkles,
-  LucideIcon,
 } from "lucide-react";
+import type {
+  PropertyType,
+  HouseRules,
+  PropertyReview,
+  PropertyData,
+} from "@/lib/types/client";
 
-export interface PropertyType {
-  primary: "villa" | "apartment" | "house" | "studio" | "penthouse";
-  secondary?: string;
-  rentalMode: "entire" | "private-room" | "shared-room";
-}
+export type { PropertyType, HouseRules, PropertyData };
 
-export interface HouseRules {
-  respect_neighbors: boolean;
-  no_parties: boolean;
-  quiet_hours: boolean;
-  reasonable_condition: boolean;
-  registered_only: boolean;
-  visitors_declared: boolean;
-  max_occupancy: boolean;
-  no_overnight_guests: boolean;
-  valid_id: boolean;
-  couples_laws: boolean;
-  respect_customs: boolean;
-  legal_compliance: boolean;
-  no_smoking: boolean;
-  designated_smoking: boolean;
-  alcohol_respectful: boolean;
-  no_illegal_substances: boolean;
-  no_pets: boolean;
-  pets_approved: boolean;
-  pets_quiet: boolean;
-  no_commercial: boolean;
-  no_filming: boolean;
-  furniture_moved: boolean;
-  damage_responsibility: boolean;
-  report_issues: boolean;
-  reasonable_usage: boolean;
-}
-export interface Review {
-  id: number;
-  name: string;
-  avatar: string;
-  date: string;
-  rating: number;
-  comment: string;
-  verified: boolean;
-}
-export interface PropertyData {
-  title: string;
-  location: string;
-  price: string;
-  videoUrl: string;
-  images: string[];
-  propertyType: PropertyType;
-  stats: {
-    type: string;
-    bedrooms: number;
-    beds: number;
-    bathrooms: number;
-  };
-  highlights: Array<{
-    icon: LucideIcon;
-    title: string;
-    description: string;
-  }>;
-  description: string;
-  amenities: Array<{
-    icon: LucideIcon;
-    label: string;
-  }>;
-  rules: string[];
-  houseRules: HouseRules;
-  policies: {
-    cancellation: string;
-    safety: string[];
-  };
-  availabilityStatus: string;
-  rating: number;
-  reviewCount: number;
-  ratingBreakdown: {
-    cleanliness: number;
-    accuracy: number;
-    communication: number;
-    location: number;
-    checkIn: number;
-    value: number;
-  };
-  reviews: Array<Review>;
-  host: {
-    name: string;
-    avatar: string;
-    bio: string;
-    verified: boolean;
-    joinedYear: number;
-    rating: number;
-    reviewCount: number;
-    responseRate: string;
-    responseTime: string;
-  };
-  locationData: {
-    neighborhood: string;
-    lat: number;
-    lng: number;
-  };
-}
+// Keep Review as alias for backward compatibility
+export type Review = PropertyReview;
+
 export const PREVIEW_MOCK_PROPERTY_DATA: Record<string, PropertyData> = {
   "1": {
     title: "The Glass Pavilion",

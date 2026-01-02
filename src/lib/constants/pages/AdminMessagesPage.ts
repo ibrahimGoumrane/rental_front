@@ -1,26 +1,11 @@
-export interface ConversationUser {
-  name: string;
-  avatar: string | null;
-  initials?: string;
-}
+import type { Conversation, ConversationUser } from "@/lib/types/admin";
 
-export interface MockConversation {
-  id: number;
-  priority: "high" | "medium" | "low";
-  guest: ConversationUser;
-  host: ConversationUser;
-  lastMessage: string;
-  flaggedPortion: string | null;
-  timestamp: string;
-  flagReason: string;
-  secondaryTags: string[];
-  aiConfidence: number;
-  status: "unreviewed" | "under-review" | "resolved";
-  assignedAdmin?: string;
-  violationCount: number;
-}
+export type { Conversation, ConversationUser };
 
-export const MOCK_CONVERSATIONS: MockConversation[] = [
+// Keep MockConversation as alias for backward compatibility
+export type MockConversation = Conversation;
+
+export const MOCK_CONVERSATIONS: Conversation[] = [
   {
     id: 1,
     priority: "high",

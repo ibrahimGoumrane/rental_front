@@ -1,23 +1,9 @@
-export interface DashboardProperty {
-  id: string;
-  title: string;
-  location: string;
-  image: string;
-  monthlyEarnings: number;
-  totalBookings: number;
-  occupancyRate: number;
-  status: "active" | "inactive";
-}
+import type {
+  DashboardProperty,
+  DashboardReservation,
+} from "@/lib/types/landlord";
 
-export interface DashboardReservation {
-  id: string;
-  propertyName: string;
-  clientName: string;
-  checkIn: string;
-  checkOut: string;
-  status: "pending" | "accepted" | "completed";
-  amount: number;
-}
+export type { DashboardProperty, DashboardReservation };
 
 export const LANDLORD_MOCK_PROPERTIES: DashboardProperty[] = [
   {

@@ -1,43 +1,16 @@
-export interface ReportUser {
-  name: string;
-  avatar: string | null;
-  initials?: string;
-  userType: "guest" | "host";
-}
+import type {
+  Report,
+  ReportUser,
+  ReportProperty,
+  ReportBooking,
+} from "@/lib/types/admin";
 
-export interface ReportProperty {
-  name: string;
-  location: string;
-  id: string;
-}
+export type { Report, ReportUser, ReportProperty, ReportBooking };
 
-export interface ReportBooking {
-  id: string;
-  dates: string;
-  status: "completed" | "in-progress" | "upcoming";
-}
+// Keep MockReport as alias for backward compatibility
+export type MockReport = Report;
 
-export interface MockReport {
-  id: string;
-  type:
-    | "property"
-    | "guest-behavior"
-    | "host-behavior"
-    | "payment"
-    | "safety"
-    | "fraud";
-  filedBy: ReportUser;
-  against: ReportUser;
-  property: ReportProperty;
-  booking: ReportBooking;
-  status: "new" | "under-review" | "awaiting-info" | "resolved" | "closed";
-  filedDate: string;
-  description: string;
-  evidence: string;
-  assignedAdmin?: string;
-}
-
-export const MOCK_REPORTS: MockReport[] = [
+export const MOCK_REPORTS: Report[] = [
   {
     id: "RPT-2024-0847",
     type: "property",

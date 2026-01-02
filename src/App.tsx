@@ -6,36 +6,36 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { Header } from "./components/ui/Header";
+import { Header } from "@/components/ui/Header";
 
 // Client Pages
-import { AccountSettingsPage } from "./pages/client/AccountSettingsPage";
-import { BookingsPage } from "./pages/client/BookingsPage";
-import { ListingsPage } from "./pages/client/ListingsPage";
-import { MessagesPage } from "./pages/client/MessagesPage";
-import { PropertyDetailPage } from "./pages/client/PropertyDetailPage";
+import { AccountSettingsPage } from "@/pages/client/AccountSettingsPage";
+import { BookingsPage } from "@/pages/client/BookingsPage";
+import { ListingsPage } from "@/pages/client/ListingsPage";
+import { MessagesPage } from "@/pages/client/MessagesPage";
+import { PropertyDetailPage } from "@/pages/client/PropertyDetailPage";
 
 // Auth Pages
-import { LoginPage } from "./pages/auth/LoginPage";
-import { SignupPage } from "./pages/auth/SignupPage";
+import { LoginPage } from "@/pages/auth/LoginPage";
+import { SignupPage } from "@/pages/auth/SignupPage";
 
 // Landlord Pages
-import { AddPropertyPage } from "./pages/landlord/AddPropertyPage";
-import { EditPropertyPage } from "./pages/landlord/EditPropertyPage";
-import { LandlordDashboardPage } from "./pages/landlord/LandlordDashboardPage";
-import { LandlordEarningsPage } from "./pages/landlord/LandlordEarningsPage";
-import { LandlordPropertyPreviewPage } from "./pages/landlord/LandlordPropertyPreviewPage";
-import { ManagePropertiesPage } from "./pages/landlord/ManagePropertiesPage";
+import { AddPropertyPage } from "@/pages/landlord/AddPropertyPage";
+import { EditPropertyPage } from "@/pages/landlord/EditPropertyPage";
+import { LandlordDashboardPage } from "@/pages/landlord/LandlordDashboardPage";
+import { LandlordEarningsPage } from "@/pages/landlord/LandlordEarningsPage";
+import { LandlordPropertyPreviewPage } from "@/pages/landlord/LandlordPropertyPreviewPage";
+import { ManagePropertiesPage } from "@/pages/landlord/ManagePropertiesPage";
 
 // Admin Pages
-import { AdminBillingPage } from "./pages/admin/AdminBillingPage";
-import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
-import { AdminMessagesPage } from "./pages/admin/AdminMessagesPage";
-import { AdminPropertiesPage } from "./pages/admin/AdminPropertiesPage";
-import { AdminReportsPage } from "./pages/admin/AdminReportsPage";
-import { AdminReservationsPage } from "./pages/admin/AdminReservationsPage";
-import { AdminSettingsPage } from "./pages/admin/AdminSettingsPage";
-import { AdminUsersPage } from "./pages/admin/AdminUsersPage";
+import { AdminBillingPage } from "@/pages/admin/AdminBillingPage";
+import { AdminDashboardPage } from "@/pages/admin/AdminDashboardPage";
+import { AdminMessagesPage } from "@/pages/admin/AdminMessagesPage";
+import { AdminPropertiesPage } from "@/pages/admin/AdminPropertiesPage";
+import { AdminReportsPage } from "@/pages/admin/AdminReportsPage";
+import { AdminReservationsPage } from "@/pages/admin/AdminReservationsPage";
+import { AdminSettingsPage } from "@/pages/admin/AdminSettingsPage";
+import { AdminUsersPage } from "@/pages/admin/AdminUsersPage";
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -46,7 +46,6 @@ function ScrollToTop() {
 function AppContent() {
   const location = useLocation();
   const isLandlordRoute = location.pathname.startsWith("/landlord");
-  const isAdminRoute = location.pathname.startsWith("/admin");
   return (
     <div className="min-h-screen bg-cream selection:bg-gold/30 selection:text-charcoal">
       <Header isLandlordMode={isLandlordRoute} />

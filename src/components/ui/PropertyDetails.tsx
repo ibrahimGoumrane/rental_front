@@ -17,9 +17,9 @@ import {
   HOUSE_RULE_LABELS,
   PROPERTY_TYPE_LABELS,
   RENTAL_MODE_LABELS,
-} from "../../lib/constants/components/PropertyDetails";
+} from "@/lib/constants/components/PropertyDetails";
 import { RatingForm } from "./RatingForm";
-import { PropertyData } from "../../lib/constants";
+import { PropertyData } from "@/lib/constants";
 
 export function PropertyDetails({ property }: { property: PropertyData }) {
   const navigate = useNavigate();

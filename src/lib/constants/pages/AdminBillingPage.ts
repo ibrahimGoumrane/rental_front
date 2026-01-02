@@ -1,10 +1,31 @@
-export const COMMISSION_DATA = [
+import type {
+  CommissionData,
+  CommissionHost,
+  CommissionProperty,
+  RefundData,
+  RefundHost,
+  RefundProperty,
+  MonthlyRevenue,
+} from "@/lib/types/admin";
+
+export type {
+  CommissionData,
+  CommissionHost,
+  CommissionProperty,
+  RefundData,
+  RefundHost,
+  RefundProperty,
+  MonthlyRevenue,
+};
+
+export const COMMISSION_DATA: CommissionData[] = [
   {
-    id: "PROP-001",
+    id: 1,
     host: {
       name: "Eleanor Martinez",
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100",
+      initials: "EM",
       verified: true,
     },
     property: {
@@ -21,7 +42,7 @@ export const COMMISSION_DATA = [
     status: "active",
   },
   {
-    id: "PROP-002",
+    id: 2,
     host: {
       name: "Marco Rossi",
       initials: "MR",
@@ -41,7 +62,7 @@ export const COMMISSION_DATA = [
     status: "active",
   },
   {
-    id: "PROP-003",
+    id: 3,
     host: {
       name: "Yuki Tanaka",
       initials: "YT",
@@ -61,11 +82,12 @@ export const COMMISSION_DATA = [
     status: "active",
   },
   {
-    id: "PROP-004",
+    id: 4,
     host: {
       name: "Sarah Jenkins",
       avatar:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100",
+      initials: "SJ",
       verified: true,
     },
     property: {
@@ -82,11 +104,12 @@ export const COMMISSION_DATA = [
     status: "active",
   },
   {
-    id: "PROP-005",
+    id: 5,
     host: {
       name: "Eleanor Martinez",
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100",
+      initials: "EM",
       verified: true,
     },
     property: {
@@ -104,7 +127,7 @@ export const COMMISSION_DATA = [
   },
 ];
 
-export const REFUNDS_DATA = [
+export const REFUNDS_DATA: RefundData[] = [
   {
     id: "REF-H-001",
     host: {
@@ -128,6 +151,7 @@ export const REFUNDS_DATA = [
       name: "Eleanor Martinez",
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100",
+      initials: "EM",
       verified: true,
     },
     property: {
@@ -163,6 +187,7 @@ export const REFUNDS_DATA = [
       name: "Sarah Jenkins",
       avatar:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100",
+      initials: "SJ",
       verified: true,
     },
     property: {
@@ -177,7 +202,7 @@ export const REFUNDS_DATA = [
   },
 ];
 
-export const MONTHLY_REVENUE = [
+export const MONTHLY_REVENUE: MonthlyRevenue[] = [
   {
     month: "Jul",
     revenue: 180000,

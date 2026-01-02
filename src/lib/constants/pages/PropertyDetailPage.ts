@@ -10,69 +10,30 @@ import {
   MapPin,
   Key,
   Sparkles,
-  LucideIcon,
 } from "lucide-react";
-import { PropertyData } from "./LandlordPropertyPreviewPage";
+import type {
+  PropertyData,
+  PropertyStats,
+  PropertyHighlight,
+  PropertyAmenity,
+  PropertyPolicies,
+  RatingBreakdown,
+  PropertyReview,
+  PropertyHost,
+  PropertyLocationData,
+} from "@/lib/types/client";
 
-export interface PropertyStats {
-  type: string;
-  bedrooms: number;
-  beds: number;
-  bathrooms: number;
-}
-
-export interface PropertyHighlight {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-}
-
-export interface PropertyAmenity {
-  icon: LucideIcon;
-  label: string;
-}
-
-export interface PropertyPolicies {
-  cancellation: string;
-  safety: string[];
-}
-
-export interface RatingBreakdown {
-  cleanliness: number;
-  accuracy: number;
-  communication: number;
-  location: number;
-  checkIn: number;
-  value: number;
-}
-
-export interface PropertyReview {
-  id: number;
-  name: string;
-  avatar: string;
-  date: string;
-  rating: number;
-  comment: string;
-  verified: boolean;
-}
-
-export interface PropertyHost {
-  name: string;
-  avatar: string;
-  bio: string;
-  verified: boolean;
-  joinedYear: number;
-  rating: number;
-  reviewCount: number;
-  responseRate: string;
-  responseTime: string;
-}
-
-export interface PropertyLocationData {
-  neighborhood: string;
-  lat: number;
-  lng: number;
-}
+export type {
+  PropertyData,
+  PropertyStats,
+  PropertyHighlight,
+  PropertyAmenity,
+  PropertyPolicies,
+  RatingBreakdown,
+  PropertyReview,
+  PropertyHost,
+  PropertyLocationData,
+};
 
 export const PROPERTY_DATA: Record<string, PropertyData> = {
   "1": {
