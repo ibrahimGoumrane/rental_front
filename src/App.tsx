@@ -1,33 +1,41 @@
-import React, { useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 import {
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
   useLocation,
 } from "react-router-dom";
 import { Header } from "./components/ui/Header";
-import { ListingsPage } from "./pages/ListingsPage";
-import { PropertyDetailPage } from "./pages/PropertyDetailPage";
-import { MessagesPage } from "./pages/MessagesPage";
-import { LoginPage } from "./pages/LoginPage";
-import { SignupPage } from "./pages/SignupPage";
-import { AccountSettingsPage } from "./pages/AccountSettingsPage";
-import { BookingsPage } from "./pages/BookingsPage";
-import { LandlordDashboardPage } from "./pages/LandlordDashboardPage";
-import { LandlordEarningsPage } from "./pages/LandlordEarningsPage";
-import { AddPropertyPage } from "./pages/AddPropertyPage";
-import { ManagePropertiesPage } from "./pages/ManagePropertiesPage";
-import { LandlordPropertyPreviewPage } from "./pages/LandlordPropertyPreviewPage";
-import { EditPropertyPage } from "./pages/EditPropertyPage";
-import { AdminDashboardPage } from "./pages/AdminDashboardPage";
-import { AdminUsersPage } from "./pages/AdminUsersPage";
-import { AdminPropertiesPage } from "./pages/AdminPropertiesPage";
-import { AdminReservationsPage } from "./pages/AdminReservationsPage";
-import { AdminBillingPage } from "./pages/AdminBillingPage";
-import { AdminMessagesPage } from "./pages/AdminMessagesPage";
-import { AdminReportsPage } from "./pages/AdminReportsPage";
-import { AdminSettingsPage } from "./pages/AdminSettingsPage";
-import { AnimatePresence } from "framer-motion";
+
+// Client Pages
+import { AccountSettingsPage } from "./pages/client/AccountSettingsPage";
+import { BookingsPage } from "./pages/client/BookingsPage";
+import { ListingsPage } from "./pages/client/ListingsPage";
+import { MessagesPage } from "./pages/client/MessagesPage";
+import { PropertyDetailPage } from "./pages/client/PropertyDetailPage";
+
+// Auth Pages
+import { LoginPage } from "./pages/auth/LoginPage";
+import { SignupPage } from "./pages/auth/SignupPage";
+
+// Landlord Pages
+import { AddPropertyPage } from "./pages/landlord/AddPropertyPage";
+import { EditPropertyPage } from "./pages/landlord/EditPropertyPage";
+import { LandlordDashboardPage } from "./pages/landlord/LandlordDashboardPage";
+import { LandlordEarningsPage } from "./pages/landlord/LandlordEarningsPage";
+import { LandlordPropertyPreviewPage } from "./pages/landlord/LandlordPropertyPreviewPage";
+import { ManagePropertiesPage } from "./pages/landlord/ManagePropertiesPage";
+
+// Admin Pages
+import { AdminBillingPage } from "./pages/admin/AdminBillingPage";
+import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
+import { AdminMessagesPage } from "./pages/admin/AdminMessagesPage";
+import { AdminPropertiesPage } from "./pages/admin/AdminPropertiesPage";
+import { AdminReportsPage } from "./pages/admin/AdminReportsPage";
+import { AdminReservationsPage } from "./pages/admin/AdminReservationsPage";
+import { AdminSettingsPage } from "./pages/admin/AdminSettingsPage";
+import { AdminUsersPage } from "./pages/admin/AdminUsersPage";
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
