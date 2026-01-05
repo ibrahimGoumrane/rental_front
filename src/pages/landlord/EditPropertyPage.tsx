@@ -1,10 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  EDIT_MOCK_PROPERTY_DATA,
-  EDIT_STEPS,
-} from "@/lib/constants/pages/EditPropertyPage";
+import { EDIT_MOCK_PROPERTY_DATA } from "@/lib/constants/pages/EditPropertyPage";
 import { EditPageHeader } from "@/components/landlord/EditPropertyPage/EditPageHeader";
 import { PropertyNotFound } from "@/components/landlord/EditPropertyPage/PropertyNotFound";
 import { StepIndicator } from "@/components/landlord/AddPropertyPage/StepIndicator";
@@ -333,7 +330,7 @@ export function EditPropertyPage() {
 
         <NavigationButtons
           currentStep={currentStep}
-          canProceed={canProceed()}
+          canProceed={!!canProceed()}
           onBack={() => setCurrentStep(Math.max(1, currentStep - 1))}
           onNext={() => setCurrentStep(currentStep + 1)}
           onSubmit={handleSubmit}

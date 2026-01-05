@@ -17,7 +17,7 @@ export function LandlordPropertyPreviewPage() {
     PREVIEW_MOCK_PROPERTY_DATA[id as keyof typeof PREVIEW_MOCK_PROPERTY_DATA];
 
   if (!property) {
-    return <PropertyNotFound propertyId={id} />;
+    return <PropertyNotFound />;
   }
 
   return (
