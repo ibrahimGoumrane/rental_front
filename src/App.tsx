@@ -8,6 +8,14 @@ import {
 } from "react-router-dom";
 import { Header } from "@/components/ui/Header";
 
+// Demo auth utility (remove when implementing real auth)
+import "@/lib/utils/demoAuth";
+
+// Guards
+import { AdminGuard } from "@/lib/guards/Admin";
+import { ClientGuard } from "@/lib/guards/Client";
+import { LandLordGuard } from "@/lib/guards/LandLord";
+
 // Client Pages
 import { AccountSettingsPage } from "@/pages/client/AccountSettingsPage";
 import { BookingsPage } from "@/pages/client/BookingsPage";
@@ -51,52 +59,63 @@ function AppContent() {
       <Header isLandlordMode={isLandlordRoute} />
       <AnimatePresence mode="wait">
         <Routes>
-          {/* Guest Routes */}
+          {/* Public Routes */}
           <Route path="/" element={<ListingsPage />} />
           <Route path="/property/:id" element={<PropertyDetailPage />} />
-          <Route path="/messages" element={<MessagesPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/account" element={<AccountSettingsPage />} />
-          <Route path="/bookings" element={<BookingsPage />} />
 
-          {/* Landlord Routes */}
-          <Route
-            path="/landlord/dashboard"
-            element={<LandlordDashboardPage />}
-          />
-          <Route
-            path="/landlord/properties"
-            element={<ManagePropertiesPage />}
-          />
-          <Route
-            path="/landlord/properties/new"
-            element={<AddPropertyPage />}
-          />
-          <Route
-            path="/landlord/properties/:id"
-            element={<LandlordPropertyPreviewPage />}
-          />
-          <Route
-            path="/landlord/properties/:id/edit"
-            element={<EditPropertyPage />}
-          />
-          <Route path="/landlord/reservations" element={<BookingsPage />} />
-          <Route path="/landlord/messages" element={<MessagesPage />} />
-          <Route path="/landlord/earnings" element={<LandlordEarningsPage />} />
+          {/* Client Protected Routes */}
+          <Route element={<ClientGuard />}>
+            <Route path="/messages" element={<MessagesPage />} />
+            <Route path="/account" element={<AccountSettingsPage />} />
+            <Route path="/bookings" element={<BookingsPage />} />
+          </Route>
 
-          {/* Admin Routes */}
-          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-          <Route path="/admin/users" element={<AdminUsersPage />} />
-          <Route path="/admin/properties" element={<AdminPropertiesPage />} />
-          <Route
-            path="/admin/reservations"
-            element={<AdminReservationsPage />}
-          />
-          <Route path="/admin/billing" element={<AdminBillingPage />} />
-          <Route path="/admin/messages" element={<AdminMessagesPage />} />
-          <Route path="/admin/reports" element={<AdminReportsPage />} />
-          <Route path="/admin/settings" element={<AdminSettingsPage />} />
+          {/* Landlord Protected Routes */}
+          <Route element={<LandLordGuard />}>
+            <Route
+              path="/landlord/dashboard"
+              element={<LandlordDashboardPage />}
+            />
+            <Route
+              path="/landlord/properties"
+              element={<ManagePropertiesPage />}
+            />
+            <Route
+              path="/landlord/properties/new"
+              element={<AddPropertyPage />}
+            />
+            <Route
+              path="/landlord/properties/:id"
+              element={<LandlordPropertyPreviewPage />}
+            />
+            <Route
+              path="/landlord/properties/:id/edit"
+              element={<EditPropertyPage />}
+            />
+            <Route path="/landlord/reservations" element={<BookingsPage />} />
+            <Route path="/landlord/messages" element={<MessagesPage />} />
+            <Route
+              path="/landlord/earnings"
+              element={<LandlordEarningsPage />}
+            />
+          </Route>
+
+          {/* Admin Protected Routes */}
+          <Route element={<AdminGuard />}>
+            <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+            <Route path="/admin/users" element={<AdminUsersPage />} />
+            <Route path="/admin/properties" element={<AdminPropertiesPage />} />
+            <Route
+              path="/admin/reservations"
+              element={<AdminReservationsPage />}
+            />
+            <Route path="/admin/billing" element={<AdminBillingPage />} />
+            <Route path="/admin/messages" element={<AdminMessagesPage />} />
+            <Route path="/admin/reports" element={<AdminReportsPage />} />
+            <Route path="/admin/settings" element={<AdminSettingsPage />} />
+          </Route>
         </Routes>
       </AnimatePresence>
     </div>
